@@ -25,8 +25,8 @@ import (
 
 // CreateActivityRequest defines model for CreateActivityRequest.
 type CreateActivityRequest struct {
-	OccursAt time.Time `json:"occurs_at"`
-	Title    string    `json:"title"`
+	OccursAt time.Time `json:"occurs_at" validate:"required"`
+	Title    string    `json:"title" validate:"required"`
 }
 
 // CreateActivityResponse defines model for CreateActivityResponse.
@@ -36,8 +36,8 @@ type CreateActivityResponse struct {
 
 // CreateLinkRequest defines model for CreateLinkRequest.
 type CreateLinkRequest struct {
-	Title string `json:"title"`
-	URL   string `json:"url"`
+	Title string `json:"title" validate:"required"`
+	URL   string `json:"url" validate:"required,url"`
 }
 
 // CreateLinkResponse defines model for CreateLinkResponse.
@@ -47,12 +47,12 @@ type CreateLinkResponse struct {
 
 // CreateTripRequest defines model for CreateTripRequest.
 type CreateTripRequest struct {
-	Destination    string                `json:"destination"`
-	EmailsToInvite []openapi_types.Email `json:"emails_to_invite"`
-	EndsAt         time.Time             `json:"ends_at"`
-	OwnerEmail     openapi_types.Email   `json:"owner_email"`
-	OwnerName      string                `json:"owner_name"`
-	StartsAt       time.Time             `json:"starts_at"`
+	Destination    string                `json:"destination" validate:"required,min=4"`
+	EmailsToInvite []openapi_types.Email `json:"emails_to_invite" validate:"required,dive,email"`
+	EndsAt         time.Time             `json:"ends_at" validate:"required"`
+	OwnerEmail     openapi_types.Email   `json:"owner_email" validate:"required,email"`
+	OwnerName      string                `json:"owner_name" validate:"required"`
+	StartsAt       time.Time             `json:"starts_at" validate:"required"`
 }
 
 // CreateTripResponse defines model for CreateTripResponse.
@@ -124,12 +124,12 @@ type GetTripParticipantsResponseArray struct {
 
 // InviteParticipantRequest defines model for InviteParticipantRequest.
 type InviteParticipantRequest struct {
-	Email openapi_types.Email `json:"email"`
+	Email openapi_types.Email `json:"email" validate:"email"`
 }
 
 // UpdateTripRequest defines model for UpdateTripRequest.
 type UpdateTripRequest struct {
-	Destination string    `json:"destination"`
+	Destination string    `json:"destination" validate:"min=4"`
 	EndsAt      time.Time `json:"ends_at"`
 	StartsAt    time.Time `json:"starts_at"`
 }
